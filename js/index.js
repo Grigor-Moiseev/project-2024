@@ -6,7 +6,6 @@ let totalMon = document.querySelector('.total-monitor');
 let totalPrin = document.querySelector('.total-printer');
 let minPrice = document.querySelector('#min');
 let maxPrice = document.querySelector('#max');
-let path = document.location.pathname;
 let searchForm = document.querySelector('.search-all');
 let search = document.querySelector('#searchid');
 let searchByPrice = document.querySelector('.search-by-price');
@@ -23,14 +22,9 @@ function callApi() {
     fetch(url)
         .then(resp => resp.json())
         .then(resp => {
-            if (path === '/index.html' || path === '/catalog.html') {
-                pushProductTotal(resp.products);
-                callProducts(resp.products);
-            };
-            if (path === '/cart.html') {
-                pushProductTotal(resp.products);
-            }
-            
+            pushProductTotal(resp.products);
+            callProducts(resp.products);
+            pushProductTotal(resp.products);
         });
 };
 
@@ -58,8 +52,7 @@ function cartItemsCount() {
     let cartNumDisp = document.querySelector('.cart-num')
 
     cartNumDisp.innerHTML = nums;
-}
-
+};
 
 function renderProduct(product) {
     let discountDisplayStyle = (product.discountPercentage === 0) ? 'style="display: none;"' : '';
@@ -135,9 +128,7 @@ function renderByCategory(apiData, categoryValue) {
 
 function callProducts(products) {
     cardSection.innerHTML = '';
-    if (path === '/index.html') {
         renderMainPage(products);
-    } else if (path === '/catalog.html') {
         renderCatalogPage(products);
         searchForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -159,11 +150,7 @@ function callProducts(products) {
         products.forEach(product => {
             renderProduct(product);
         });
-    } 
-    else if (path === '/cart.html') {
-
-    }
-};
+    };
 
 function renderMainPage(products) {
 
@@ -172,42 +159,42 @@ function renderMainPage(products) {
             renderProduct(product);
         };
     });
-
-    function updateSlider() {
-        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateIndicators();
-    };
-
-    function updateIndicators() {
-        while (indicatorsContainer.firstChild) {
-            indicatorsContainer.removeChild(indicatorsContainer.firstChild);
-        }
-        slides.forEach((slide, index) => {
-            let indicator = document.createElement('div');
-            indicator.classList.add('indicator');
-            if (index === currentIndex) {
-                indicator.classList.add('active-slide');
-            }
-            indicator.onclick = () => {
-                currentIndex = index;
-                clearInterval(intervalId);
-                updateSlider();
-                startInterval();
-            };
-            indicatorsContainer.appendChild(indicator);
-        });
-    };
-
-    function startInterval() {
-        intervalId = setInterval(() => {
-            currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
-            updateSlider();
-        }, 7000);
-    };
-
-    updateIndicators();
-    startInterval();
 };
+
+function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateIndicators();
+};
+
+function updateIndicators() {
+    while (indicatorsContainer.firstChild) {
+        indicatorsContainer.removeChild(indicatorsContainer.firstChild);
+    }
+    slides.forEach((slide, index) => {
+        let indicator = document.createElement('div');
+        indicator.classList.add('indicator');
+        if (index === currentIndex) {
+            indicator.classList.add('active-slide');
+        }
+        indicator.onclick = () => {
+            currentIndex = index;
+            clearInterval(intervalId);
+            updateSlider();
+            startInterval();
+        };
+        indicatorsContainer.appendChild(indicator);
+    });
+};
+
+function startInterval() {
+    intervalId = setInterval(() => {
+        currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+        updateSlider();
+    }, 7000);
+};
+
+updateIndicators();
+startInterval();
 
 function renderCatalogPage(products) {
     maxPrice.value = Math.max(...products.map(product => product.price));
