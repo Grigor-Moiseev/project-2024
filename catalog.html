@@ -16,19 +16,18 @@
             </div>
             <div class="nav-2">
                 <ul>
-                    <li><a href="">Products</a></li>
-                    <li><a href="">Brands</a></li>
-                    <li><a href="">Contact</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li class="cart-display"><a href="cart.html">Cart</a><p class="cart-num"></p></li>
+                    <li><a href="">About</a></li>
                 </ul>
             </div>
         </div>
-       
         <div class="nav-3">
             <p>Folow US:</p>
             <div class="icons">
-                <a href="http://" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-                <a href="http://" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                <a href="http://" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
     </nav>
@@ -65,6 +64,7 @@
        </div>
     </header>
     <div class="search-div">
+        <div class="search-input">
         <form class="search-all">
             <input type="text" id="searchid" placeholder="Search for product">
             <button id="searchbtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -72,15 +72,31 @@
         <form class="search-by-price">
             <p>Search By Price</p>
             <div class="min-max">
-                <input id="min" type="number" value="1">
-                <input id="max" type="number" value="9999"> 
+                <input class="no-arrows" id="min" type="number" value="">
+                <input class="no-arrows" id="max" type="number" value=""> 
                 <button id="min-max-btn">Submit</button>
             </div>
         </form>
+        </div>
         <div class="search-by-brand">
             <p>Search by Brand</p>
             <div class="brand-btns">
-
+                <button id="brands-btns" value="samsung">Samsung</button>
+                <button id="brands-btns" value="lg">LG</button>
+                <button id="brands-btns" value="lenovo">Lenovo</button>
+                <button id="brands-btns" value="asus">Asus</button>
+                <button id="brands-btns" value="canon">Canon</button>
+                <button id="brands-btns" value="hp">HP</button>
+                <button id="brands-btns" value="epson">Epson</button>
+                <button id="brands-btns" value="xerox">Xerox</button>
+                <button id="brands-btns" value="acer">Acer</button>
+                <button id="brands-btns" value="apple">Apple</button>
+                <button id="brands-btns" value="xiaomi">Xiaomi</button>
+                <button id="brands-btns" value="msi">MSI</button>
+                <button id="brands-btns" value="dell">Dell</button>
+                <button id="brands-btns" value="honor">Honor</button>
+                <button id="brands-btns" value="oneplus">OnePlus</button>
+                <button id="brands-btns" value="all">All</button>
             </div>
         </div>
 
@@ -102,6 +118,6 @@
 
  </main>
  <footer><span>@e-shop 2024</span></footer>
- <script src="js/catalog.js"></script>
+ <script src="js/index.js"></script>
 </body>
 </html>
