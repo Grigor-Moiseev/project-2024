@@ -22,7 +22,7 @@ function callApi() {
     fetch(url)
     .then(resp => resp.json())
     .then(resp => {
-         pushProductTotal(resp.products);
+        pushProductTotal(resp.products);
         callProducts(resp.products);
         pushProductTotal(resp.products);
     });
