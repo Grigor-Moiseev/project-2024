@@ -1,15 +1,19 @@
 let cartBtns = document.querySelectorAll('.process-btn');
-let totalSum = document.querySelector('.total-price')
+let totalSum = document.querySelector('.total-price');
+
+function getCartItems() {
+    return JSON.parse(localStorage.getItem('cartItems')) || [];
+};
 
 function removeFromCart(itemIndex) {
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let cartItems = getCartItems();
     cartItems.splice(itemIndex, 1);
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     renderCartProducts();
 };
 
 function renderCartProducts() {
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let cartItems = getCartItems();
     let tableBody = document.querySelector('.cart-data table tbody');
     let total = 0;
     tableBody.innerHTML = '';
@@ -20,10 +24,11 @@ function renderCartProducts() {
         let priceCell = document.createElement('td');
         let quantityCell = document.createElement('td');
         let removeCell = document.createElement('td');
+        let totalItemPrice = item.price * item.quantity;
         imageCell.innerHTML = `<img class="table-img" src="${item.img}" alt="item">`;
-        itemCell.innerHTML = item.title;
-        priceCell.innerHTML = item.price;
-        quantityCell.innerHTML = item.quantity;
+        itemCell.textContent = item.title;
+        priceCell.textContent = totalItemPrice;
+        quantityCell.textContent = item.quantity;
         removeCell.innerHTML = `<button class="remove-item-btn" data-index="${index}"><i class="fa-regular fa-trash-can"></i></button>`;
         row.appendChild(imageCell);
         row.appendChild(itemCell);
@@ -35,14 +40,14 @@ function renderCartProducts() {
             removeFromCart(index);
             cartItemsCount();
         });
-        total += item.price;
+        total += totalItemPrice;
     });
     totalSum.innerHTML = `Total: ${total} GEL`;
 };
 
 cartBtns.forEach((button, index) => {
     button.addEventListener('click', function() {
-        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        let cartItems = getCartItems();
         if (cartItems.length === 0) {
             alert('Cart is empty!!!');
             return;

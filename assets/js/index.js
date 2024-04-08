@@ -31,8 +31,12 @@ function callApi() {
 callApi();
 cartItemsCount();
 
+function getCartItems() {
+    return JSON.parse(localStorage.getItem('cartItems')) || [];
+};
+
 function saveToLocalStorage(product) {
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let cartItems = getCartItems()
     let existingItemIndex = cartItems.findIndex(item => item.id === product.id);
     if (existingItemIndex !== -1) {
         cartItems[existingItemIndex].quantity++;
@@ -44,7 +48,7 @@ function saveToLocalStorage(product) {
 };
 
 function cartItemsCount() {
-    let cartTotal = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let cartTotal = getCartItems()
     let nums = 0;
     cartTotal.forEach(item => {
         nums += item.quantity;
