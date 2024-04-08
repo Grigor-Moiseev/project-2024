@@ -42,15 +42,19 @@ function renderCartProducts() {
 
 cartBtns.forEach((button, index) => {
     button.addEventListener('click', function() {
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        if (cartItems.length === 0) {
+            alert('Cart is empty!!!');
+            return;
+        };
         if (index === 0) {
             localStorage.removeItem('cartItems');
             window.location.href = 'index.html';
-        }
-        if (index === 1) {
+        } else if (index === 1) {
             localStorage.removeItem('cartItems');
             renderCartProducts();
             cartItemsCount();
-        }
+        };
     });
 });
 
