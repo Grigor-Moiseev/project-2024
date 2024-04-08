@@ -374,6 +374,43 @@ table, th, td{
     border-collapse: collapse;
 }
 
+.cart-table{
+    margin-top: 20px;
+    font-size: 14px;
+    width: 730px;
+}
+
+.remove-item-btn{
+    background-color: white;
+    border: none;
+    color: blueviolet;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.remove-item-btn:hover{
+    color: red;
+    transition: 0.5s;
+}
+
+.cart-btns, .total-price{
+    margin-top: 20px;
+}
+
+.total-price{
+    text-decoration: underline;
+}
+
+.cart-btns > button{
+    width: 80px;
+    height: 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    color: white;
+    background-color: blueviolet;
+}
+
 .cart-num{
     display: flex;
     align-items: center;
