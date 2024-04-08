@@ -20,12 +20,12 @@ let intervalId;
 
 function callApi() {
     fetch(url)
-        .then(resp => resp.json())
-        .then(resp => {
-            pushProductTotal(resp.products);
-            callProducts(resp.products);
-            pushProductTotal(resp.products);
-        });
+    .then(resp => resp.json())
+    .then(resp => {
+         pushProductTotal(resp.products);
+        callProducts(resp.products);
+        pushProductTotal(resp.products);
+    });
 };
 
 callApi();
@@ -36,7 +36,7 @@ function getCartItems() {
 };
 
 function saveToLocalStorage(product) {
-    let cartItems = getCartItems()
+    let cartItems = getCartItems();
     let existingItemIndex = cartItems.findIndex(item => item.id === product.id);
     if (existingItemIndex !== -1) {
         cartItems[existingItemIndex].quantity++;
@@ -48,13 +48,12 @@ function saveToLocalStorage(product) {
 };
 
 function cartItemsCount() {
-    let cartTotal = getCartItems()
+    let cartTotal = getCartItems();
     let nums = 0;
     cartTotal.forEach(item => {
         nums += item.quantity;
     });
-    let cartNumDisp = document.querySelector('.cart-num')
-
+    let cartNumDisp = document.querySelector('.cart-num');
     cartNumDisp.innerHTML = nums;
 };
 
@@ -62,16 +61,15 @@ function renderProduct(product) {
     let discountDisplayStyle = (product.discountPercentage === 0) ? 'style="display: none;"' : '';
     cardSection.innerHTML +=
         `<div class="card">
-            <img src="${product.img}" alt="Photo">
-            <p>${product.title}</p>
-            <div class="priceStock">
-                <p>${product.price} ${product.currency}</p>
-                <p ${discountDisplayStyle}>${product.beforeDiscount} ${product.currency}</p>
-            </div>
-            <p>In Stock: ${product.stock}</p>
-            <button class="add-to-cart-btn" data-product='${JSON.stringify(product)}'>Add to Cart</button>
+        <img src="${product.img}" alt="Photo">
+        <p>${product.title}</p>
+        <div class="priceStock">
+        <p>${product.price} ${product.currency}</p>
+        <p ${discountDisplayStyle}>${product.beforeDiscount} ${product.currency}</p>
+        </div>
+        <p>In Stock: ${product.stock}</p>
+        <button class="add-to-cart-btn" data-product='${JSON.stringify(product)}'>Add to Cart</button>
         </div>`;
-
     let addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     addToCartButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -84,8 +82,8 @@ function renderProduct(product) {
 
 function callBySearch(brand) {
     fetch(url)
-        .then(resp => resp.json())
-        .then(resp => renderBy(resp.products, brand));
+    .then(resp => resp.json())
+    .then(resp => renderBy(resp.products, brand));
 };
 
 function searchByBrand(brand) {
