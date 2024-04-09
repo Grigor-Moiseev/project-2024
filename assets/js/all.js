@@ -17,6 +17,8 @@ let slides = document.querySelectorAll('.slide');
 let indicatorsContainer = document.querySelector('#indicators');
 let currentIndex = 0;
 let intervalId;
+let cartBtns = document.querySelectorAll('.process-btn');
+let totalSum = document.querySelector('.total-price');
 
 function callApi() {
     fetch(url)
@@ -24,15 +26,7 @@ function callApi() {
     .then(resp => {
         pushProductTotal(resp.products);
         callProducts(resp.products);
-        pushProductTotal(resp.products);
     });
-};
-
-callApi();
-cartItemsCount();
-
-function getCartItems() {
-    return JSON.parse(localStorage.getItem('cartItems')) || [];
 };
 
 function saveToLocalStorage(product) {
@@ -59,7 +53,8 @@ function cartItemsCount() {
 
 function renderProduct(product) {
     let discountDisplayStyle = (product.discountPercentage === 0) ? 'style="display: none;"' : '';
-    cardSection.innerHTML +=
+    if (cardSection) {
+        cardSection.innerHTML +=
         `<div class="card">
         <img src="${product.img}" alt="Photo">
         <p>${product.title}</p>
@@ -70,6 +65,7 @@ function renderProduct(product) {
         <p>In Stock: ${product.stock}</p>
         <button class="add-to-cart-btn" data-product='${JSON.stringify(product)}'>Add to Cart</button>
         </div>`;
+    };
     let addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     addToCartButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -101,7 +97,7 @@ function renderBy(apiData, brand) {
         });
     } else {
         alert('Product not found!!!');
-    }
+    };
 };
 
 function renderByPrice(apiData) {
@@ -113,7 +109,7 @@ function renderByPrice(apiData) {
         });
     } else {
         alert('Product not found!!!');
-    }
+    };
 };
 
 function renderByCategory(apiData, categoryValue) {
@@ -125,13 +121,16 @@ function renderByCategory(apiData, categoryValue) {
         });
     } else {
         alert('Product not found!!!');
-    }
+    };
 };
 
 function callProducts(products) {
-    cardSection.innerHTML = '';
-        renderMainPage(products);
-        renderCatalogPage(products);
+    if (cardSection) {
+        cardSection.innerHTML = '';
+    };
+    renderMainPage(products);
+    renderCatalogPage(products);
+    if (searchForm && searchByPrice && category) {
         searchForm.addEventListener('submit', function(event) {
             event.preventDefault();
             brandsHeader.innerHTML = 'Search All';
@@ -149,10 +148,11 @@ function callProducts(products) {
                 renderByCategory(products, categoryValue);
             });
         });
-        products.forEach(product => {
-            renderProduct(product);
-        });
     };
+    products.forEach(product => {
+        renderProduct(product);
+    });
+};
 
 function renderMainPage(products) {
 
@@ -195,12 +195,11 @@ function startInterval() {
     }, 7000);
 };
 
-updateIndicators();
-startInterval();
-
 function renderCatalogPage(products) {
-    maxPrice.value = Math.max(...products.map(product => product.price));
-    minPrice.value = Math.min(...products.map(product => product.price));
+    if (maxPrice && minPrice) {
+        maxPrice.value = Math.max(...products.map(product => product.price));
+        minPrice.value = Math.min(...products.map(product => product.price));
+    };
     btns.forEach(call => {
         call.addEventListener('click', function () {
             let brand = call.value;
@@ -220,9 +219,8 @@ function renderCatalogPage(products) {
 
 function pushDataSearch(apiData, brand) {
     cardSection.innerHTML = '';
-    let filteredData = apiData.filter(obj => 
-        obj.brand.toLowerCase().trim() === brand.toLowerCase().trim() || 
-        obj.title.toLowerCase().trim().includes(brand.toLowerCase().trim())
+    let filteredData = apiData.filter(obj =>
+        obj.brand.toLowerCase().trim() === brand.toLowerCase().trim() || obj.title.toLowerCase().trim().includes(brand.toLowerCase().trim())
     );
     if (filteredData.length !== 0) {
         filteredData.forEach(obj => {
@@ -257,3 +255,80 @@ function pushProductTotal(total) {
     totalMon.innerHTML = `Available: ${monitorTotal}`;
     totalPrin.innerHTML = `Available: ${printerTotal}`;
 };
+
+callApi();
+cartItemsCount();
+if (indicatorsContainer) {
+    updateIndicators();
+    startInterval();
+};
+
+function getCartItems() {
+    return JSON.parse(localStorage.getItem('cartItems')) || [];
+};
+
+function removeFromCart(itemIndex) {
+    let cartItems = getCartItems();
+    cartItems.splice(itemIndex, 1);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    renderCartProducts();
+};
+
+function renderCartProducts() {
+    let cartItems = getCartItems();
+    let tableBody = document.querySelector('.cart-data table tbody');
+    let total = 0;
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    };
+    cartItems.forEach((item, index) => {
+        let row = document.createElement('tr');
+        let imageCell = document.createElement('td');
+        let itemCell = document.createElement('td');
+        let priceCell = document.createElement('td');
+        let quantityCell = document.createElement('td');
+        let removeCell = document.createElement('td');
+        let totalItemPrice = item.price * item.quantity;
+        imageCell.innerHTML = `<img class="table-img" src="${item.img}" alt="item">`;
+        itemCell.textContent = item.title;
+        priceCell.textContent = totalItemPrice;
+        quantityCell.textContent = item.quantity;
+        removeCell.innerHTML = `<button class="remove-item-btn" data-index="${index}"><i class="fa-regular fa-trash-can"></i></button>`;
+        row.appendChild(imageCell);
+        row.appendChild(itemCell);
+        row.appendChild(priceCell);
+        row.appendChild(quantityCell);
+        row.appendChild(removeCell);
+        if (tableBody) {
+            tableBody.appendChild(row);
+        };
+        removeCell.querySelector('.remove-item-btn').addEventListener('click', function() {
+            removeFromCart(index);
+            cartItemsCount();
+        });
+        total += totalItemPrice;
+    });
+    if (totalSum) {
+        totalSum.innerHTML = `Total: ${total} GEL`;
+    };
+};
+
+cartBtns.forEach((button, index) => {
+    button.addEventListener('click', function() {
+        let cartItems = getCartItems();
+        if (cartItems.length === 0) {
+            alert('Cart is empty!!!');
+            return;
+        };
+        if (index === 0) {
+            localStorage.removeItem('cartItems');
+            window.location.href = 'index.html';
+        } else if (index === 1) {
+            localStorage.removeItem('cartItems');
+            renderCartProducts();
+            cartItemsCount();
+        };
+    });
+});
+
+renderCartProducts();
