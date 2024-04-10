@@ -19,6 +19,8 @@ let currentIndex = 0;
 let intervalId;
 let cartBtns = document.querySelectorAll('.process-btn');
 let totalSum = document.querySelector('.total-price');
+let addressLi = document.querySelectorAll('.address-li');
+let map = document.querySelectorAll('iframe');
 
 function callApi() {
     fetch(url)
@@ -328,6 +330,18 @@ cartBtns.forEach((button, index) => {
             renderCartProducts();
             cartItemsCount();
         };
+    });
+});
+
+addressLi.forEach((click, index) => {
+    click.addEventListener('click', function () {
+        map.forEach((iframe, i) => {
+            if (i === index) {
+                iframe.classList.remove('display-none');
+            } else {
+                iframe.classList.add('display-none');
+            }
+        });
     });
 });
 

@@ -482,3 +482,54 @@ table, th, td{
         transform: scale(1);
     }
 }
+
+.address{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.address > h1{
+    margin-bottom: 30px;
+}
+
+.address-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.address-ul{
+    flex-direction: column;
+    width: 180px;
+    row-gap: 50px;
+    margin: 0px;
+}
+
+.address-li{
+    border: 2px solid black;
+    background-color: blueviolet;
+    border-radius: 35px;
+    color: white;
+    height: 30px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.address-li:hover{
+    cursor: pointer;
+    animation: heartbeat 0.8s infinite;
+}
+
+.address-map > iframe{
+    margin-top: 10px;
+    width: 500px;
+    height: 300px;
+}
+
+.display-none{
+    display: none;
+}
