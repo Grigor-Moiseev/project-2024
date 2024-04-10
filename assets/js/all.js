@@ -21,6 +21,7 @@ let cartBtns = document.querySelectorAll('.process-btn');
 let totalSum = document.querySelector('.total-price');
 let addressLi = document.querySelectorAll('.address-li');
 let map = document.querySelectorAll('iframe');
+let locationName = document.querySelector('.location');
 
 function callApi() {
     fetch(url)
@@ -335,6 +336,9 @@ cartBtns.forEach((button, index) => {
 
 addressLi.forEach((click, index) => {
     click.addEventListener('click', function () {
+        let name =click.getAttribute('name');
+        locationName.innerHTML = '';
+        locationName.innerHTML = `Location: ${name}`;
         map.forEach((iframe, i) => {
             if (i === index) {
                 iframe.classList.remove('display-none');
