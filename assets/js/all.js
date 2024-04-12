@@ -328,15 +328,24 @@ function renderCartProducts() {
 
 cartBtns.forEach((button, index) => {
     button.addEventListener('click', function() {
+        let confirmation;
         let cartItems = getCartItems();
         if (cartItems.length === 0) {
             alert('Cart is empty!!!');
             return;
         };
         if (index === 0) {
+            confirmation = confirm('Are you sure?');
+            if (!confirmation) {
+                return;
+            };
             localStorage.removeItem('cartItems');
             window.location.href = 'index.html';
         } else if (index === 1) {
+            confirmation = confirm('Are you sure?');
+            if (!confirmation) {
+                return;
+            };
             localStorage.removeItem('cartItems');
             renderCartProducts();
             cartItemsCount();
@@ -370,8 +379,6 @@ if (navSearchBtn) {
         };
     });
 };
-
-
 
 
 renderCartProducts();
