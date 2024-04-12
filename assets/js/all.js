@@ -22,6 +22,9 @@ let totalSum = document.querySelector('.total-price');
 let addressLi = document.querySelectorAll('.address-li');
 let map = document.querySelectorAll('iframe');
 let locationName = document.querySelector('.location');
+let navSearchBtn = document.querySelector('.search-btn');
+let navSearchDiv = document.querySelector('.search-div');
+let catalogHead = document.querySelector('.catalog-all');
 
 function callApi() {
     fetch(url)
@@ -71,7 +74,14 @@ function renderProduct(product) {
     };
     let addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     addToCartButtons.forEach(button => {
+        let timeoutId;
         button.addEventListener('click', () => {
+            let alertTag = document.querySelector('.alert');
+            alertTag.style.display = 'flex';
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                alertTag.style.display = 'none';
+            }, 1500);
             let productData = JSON.parse(button.dataset.product);
             saveToLocalStorage(productData);
             cartItemsCount();
@@ -348,5 +358,20 @@ addressLi.forEach((click, index) => {
         });
     });
 });
+
+if (navSearchBtn) {
+    navSearchBtn.addEventListener('click', function (){
+        if (navSearchDiv.style.display === 'none' || navSearchDiv.style.display === '') {
+            navSearchDiv.style.display = 'flex';
+            catalogHead.style.marginTop = '400px';
+        } else {
+            navSearchDiv.style.display = 'none';
+            catalogHead.style.marginTop = '220px';
+        };
+    });
+};
+
+
+
 
 renderCartProducts();
