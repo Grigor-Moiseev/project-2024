@@ -114,6 +114,10 @@
         margin-top: 100px;
     }
 
-
+    .alert{
+        left: 30%;
+        width: 170px;
+        top: 80px;
+    }
 
 }
