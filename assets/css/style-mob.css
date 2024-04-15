@@ -1,0 +1,119 @@
+@media screen and (max-width: 768px) {
+    .nav-1{
+        margin-left: 15px;
+    }
+
+    .nav-4{
+        display: unset;
+    }
+
+    .mob-menu{
+        display: none;
+        flex-direction: column-reverse;
+        justify-content: space-around;
+        width: 100%;
+        color: white;
+    }
+    
+    .mob-nav > ul{
+        margin-left: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 30px;
+    }
+
+    .burger:hover{
+        animation: heartbeat 0.8s infinite;
+        cursor: pointer;
+    }
+
+    .nav-2, .nav-3{
+        display: none;
+    }
+    
+    header{
+        height: auto;
+        margin-top:80px;
+        position: unset;
+    }
+
+    .hdiv-main{
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hdiv-1, .hdiv-2, .hdiv-3, .hdiv-4{
+        flex-direction: column-reverse;
+    }
+
+    .hdiv-1 > img, .hdiv-2 > img, .hdiv-3 > img, .hdiv-4 > img{
+        width: 110px;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+
+    #slider-container {
+        margin-top: 0px;
+    }
+
+    main{
+        margin-top: 50px;
+    }
+
+    .slide img {
+        width: 280px;
+        height: 140px;
+        border-radius: 1vh;
+    }
+
+    .search-div{
+        top: 70px;
+        height: 500px;
+    }
+
+    .catalog-all{
+        margin-top: 80px;
+    }
+
+    .cart-table{
+        margin-top: 20px;
+        font-size: 12px;
+        width: 230px;
+    }
+
+    .cart-info{
+        margin-top: 80px;
+    }
+
+    .address-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px 0;
+    }
+
+    .address-map > iframe{
+        width: 100%;
+        height: 250px;
+        padding: 0px;
+    }
+
+    .location{
+        margin-top: 25px;
+    }
+    
+    .img > img{
+        width: 100px;
+        height: 100px;
+    }
+
+    .about{
+        margin-top: 100px;
+    }
+
+
+
+}

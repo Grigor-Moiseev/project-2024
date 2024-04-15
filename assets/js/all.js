@@ -25,6 +25,19 @@ let locationName = document.querySelector('.location');
 let navSearchBtn = document.querySelector('.search-btn');
 let navSearchDiv = document.querySelector('.search-div');
 let catalogHead = document.querySelector('.catalog-all');
+let burgerBtn = document.querySelector('.burger');
+
+burgerBtn.addEventListener('click', function (){
+    let mobMenu = document.querySelector('.mob-menu');
+    let productDiv = document.querySelector('.hdiv-main')
+    if (mobMenu.style.display === 'none' || mobMenu.style.display === '') {
+        mobMenu.style.display = 'flex';
+        productDiv.style.marginTop = '250px'
+    } else {
+        mobMenu.style.display = 'none';
+        productDiv.style.marginTop = '';
+    }
+});
 
 function callApi() {
     fetch(url)
@@ -53,8 +66,10 @@ function cartItemsCount() {
     cartTotal.forEach(item => {
         nums += item.quantity;
     });
-    let cartNumDisp = document.querySelector('.cart-num');
-    cartNumDisp.innerHTML = nums;
+    let cartNumDisp = document.querySelectorAll('.cart-num');
+    cartNumDisp.forEach(count => {
+        count.innerHTML = nums;
+    });
 };
 
 function renderProduct(product) {
@@ -374,10 +389,15 @@ if (navSearchBtn) {
             catalogHead.style.marginTop = '400px';
         } else {
             navSearchDiv.style.display = 'none';
-            catalogHead.style.marginTop = '220px';
+            catalogHead.style.marginTop = '';
         };
     });
 };
+
+
+
+let styleSheet = document.styleSheets;
+console.log(styleSheet);
 
 
 renderCartProducts();
