@@ -394,10 +394,4 @@ if (navSearchBtn) {
     });
 };
 
-
-
-let styleSheet = document.styleSheets;
-console.log(styleSheet);
-
-
 renderCartProducts();

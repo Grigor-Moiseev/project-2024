@@ -199,7 +199,7 @@ main > h1{
     border-radius: 3vh;
 }
 
-.slide img {
+.slide > img {
     border-radius: 3vh;
     width: 1100px;
     height: 350px;
